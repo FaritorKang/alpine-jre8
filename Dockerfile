@@ -2,12 +2,11 @@
 FROM alpine:latest
 MAINTAINER faritor<faritor@unmz.net>
 
-# Install cURL
-RUN echo -e "https://mirror.tuna.tsinghua.edu.cn/alpine/v3.9/main\n\
-    https://mirror.tuna.tsinghua.edu.cn/alpine/v3.9/community" > /etc/apk/repositories
+# update aliyun repositories
+RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories 
 
-RUN apk --update add -U curl bash openjdk8-jre-base tzdata && \
-    cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime  &&\
+RUN apk --update add curl bash openjdk8-jre-base tzdata && \
+    cp -r -f /usr/share/zoneinfo/Asia/Shanghai  /etc/localtime && \
     rm -rf /var/cache/apk/*
 
 # Set environment
